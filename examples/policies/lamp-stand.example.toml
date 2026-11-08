@@ -1,0 +1,28 @@
+# EXAMPLE ONLY. Do not connect to hardware without an independent safety review.
+# Copy and explicitly set LV_COMMAND_POLICY to the reviewed file to opt in.
+# These three synthetic lamps have no effect unless configured. Limits are
+# application choices, not validated hardware ratings or a safety interlock.
+
+[[commands]]
+verb = "set"
+target = "lamp_1"
+min_value = 0.0
+max_value = 1.0
+max_ttl_seconds = 10.0
+min_interval_seconds = 10.0
+
+[[commands]]
+verb = "set"
+target = "lamp_2"
+min_value = 0.0
+max_value = 1.0
+max_ttl_seconds = 10.0
+min_interval_seconds = 10.0
+
+[[commands]]
+verb = "set"
+target = "lamp_3"
+min_value = 0.0
+max_value = 1.0
+max_ttl_seconds = 10.0
+min_interval_seconds = 10.0
