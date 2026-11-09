@@ -1,0 +1,20 @@
+# Roadrunner CI (Woodpecker + Dagger, https://cicd.apps.example.com): port of .github/workflows/ci.yml — Python 3.11, uv sync --frozen, pytest, examples/fake_vi.py smoke.
+# `$$` escapes `$` for Woodpecker. Docs: https://cicd.docs.example.com/roadrunner/
+labels:
+  tier: "0"
+when:
+  - event: pull_request
+  - event: [push, manual]
+    branch: main
+steps:
+  - name: test
+    image: bash
+    environment:
+      OTEL_EXPORTER_OTLP_LOGS_ENDPOINT: http://192.0.2.1:4318/v1/logs
+      OTEL_EXPORTER_OTLP_LOGS_PROTOCOL: http/protobuf
+    commands:
+      - >-
+        ci-runner v0.10.1 python-uv --src=. --repo="$${CI_REPO_NAME,,}" --python=3.11 --sync-args=--frozen
+        --run='uv run --frozen pytest && uv run --frozen python examples/fake_vi.py'
+        --dep-cache=registry.dev.example.com/cache
+        --dep-cache-password=file:///etc/ci/cache-password --test-workers=2
